@@ -14,13 +14,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../bower_components/font-roboto/roboto.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
-<link rel="import" href="../bower_components/carbon-storage/carbon-network-status-behavior.html">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700">
 
 <link rel="import" href="../bower_components/carbon-pouchdb/carbon-pouchdb-query.html">
 <link rel="import" href="../bower_components/carbon-pouchdb/carbon-pouchdb-document.html">
 <link rel="import" href="../note-app/na-note.html">
 <link rel="import" href="../note-app/na-editor.html">
+<link rel="import" href="../note-app/na-behavior.html">
 <link rel="import" href="../note-app/shared-styles.html">
 
 <dom-module id="note-app">
@@ -35,7 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </header>
 
     <carbon-pouchdb-query
-        id="storage"
+        id="query"
         db-name="notes"
         selector="_id $gt 0"
         fields='["_id", "title", "body"]'
@@ -55,7 +55,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
 
     <carbon-pouchdb-document
-        id="pouchdb"
+        id="document"
         db-name="notes"
         doc-id="[[editableNoteId]]"
         data="{{editableNote}}">
@@ -71,46 +71,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   </template>
   <script>
-    (function() {
+    (() => {
       'use strict';
 
       Polymer({
         is: 'note-app',
 
         behaviors: [
-          Polymer.CarbonNetworkStatusBehavior
-        ],
-
-        properties: {
-          editableNoteId: {
-            type: String,
-            notify: true
-          }
-        },
-
-        edit(event) {
-          var noteElement = Polymer.dom(event).localTarget;
-          this.editableNoteId = noteElement.id;
-
-          this.$.pouchdb.transactionsComplete.then(() => {
-            this.$.editor.open(noteElement);
-          });
-        },
-
-        create() {
-          this.editableNoteId = null;
-          this.$.editor.open();
-        },
-
-        save() {
-          if (this.$.pouchdb.isNew &&
-              (this.editableNote.title ||
-               this.editableNote.body)) {
-            this.$.pouchdb.save();
-          }
-
-          this.$.storage.refresh();
-        }
+          Polymer.NoteAppBehavior
+        ]
       });
     })();
   </script>

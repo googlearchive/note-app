@@ -1,0 +1,58 @@
+<link rel="import" href="../bower_components/carbon-storage/carbon-network-status-behavior.html">
+<script>
+  (() => {
+    'use strict';
+
+    Polymer.NoteAppBehaviorImpl = {
+      properties: {
+        editableNoteId: {
+          type: String,
+          notify: true
+        }
+      },
+
+      get isEditable() {
+        return true;
+      },
+
+      toEditableId(noteId) {
+        return noteId;
+      },
+
+      edit(event) {
+        if (this.isEditable) {
+          let noteElement = Polymer.dom(event).localTarget;
+          this.editableNoteId = this.toEditableId(noteElement.id);
+
+          this.$.document.transactionsComplete.then(() => {
+            this.$.editor.open(noteElement);
+          });
+        }
+      },
+
+      create() {
+        if (this.isEditable) {
+          this.editableNoteId = null;
+          this.$.editor.open();
+        }
+      },
+
+      save() {
+        if (this.$.document.isNew &&
+            (this.editableNote.title ||
+             this.editableNote.body)) {
+          this.$.document.save('/notes');
+        }
+
+        if (this.$.query.refresh) {
+          this.$.query.refresh();
+        }
+      }
+    };
+
+    Polymer.NoteAppBehavior = [
+      Polymer.CarbonNetworkStatusBehavior,
+      Polymer.NoteAppBehaviorImpl
+    ]
+  })();
+</script>

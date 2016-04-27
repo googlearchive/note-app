@@ -21,6 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymerfire/firebase-document.html">
 <link rel="import" href="../note-app/na-note.html">
 <link rel="import" href="../note-app/na-editor.html">
+<link rel="import" href="../note-app/na-behavior.html">
 <link rel="import" href="../note-app/shared-styles.html">
 
 <dom-module id="note-app">
@@ -35,7 +36,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </header>
 
     <firebase-query
-        id="storage"
+        id="query"
         app-name="notes"
         path="/notes"
         data="{{data}}">
@@ -62,9 +63,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-fab icon="add" disabled="[[!online]]" on-tap="create"></paper-fab>
 
     <firebase-document
-        id="firebase"
+        id="document"
         app-name="notes"
-        path="[[computeFirebasePath(editableNoteId)]]"
+        path="[[editableNoteId]]"
         data="{{editableNote}}">
     </firebase-document>
 
@@ -76,56 +77,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   </template>
   <script>
-    (function() {
+    (() => {
       'use strict';
 
       Polymer({
         is: 'note-app',
 
-        properties: {
-          online: {
-            type: Boolean
-          },
+        behaviors: [
+          Polymer.NoteAppBehavior
+        ],
 
-          editableNoteId: {
-            type: String,
-            notify: true
-          }
+        get isEditable() {
+          return this.online;
         },
 
-        edit(event) {
-          if (this.online) {
-            var noteElement = Polymer.dom(event).localTarget;
-            this.editableNoteId = noteElement.id;
-
-            this.$.firebase.transactionsComplete.then(() => {
-              this.$.editor.open(noteElement);
-            });
-          }
-        },
-
-        create() {
-          if (this.online) {
-            this.editableNoteId = null;
-            this.$.editor.open();
-          }
-        },
-
-        save() {
-          if (this.$.firebase.isNew &&
-              (this.editableNote.title ||
-               this.editableNote.body)) {
-            this.$.firebase.save('/notes');
-          }
-        },
-
-        computeFirebasePath(noteId) {
-          return noteId ?
-            '/notes/' + noteId :
-            null;
+        toEditableId(noteId) {
+          return '/notes/' + noteId;
         }
       });
     })();
-
   </script>
 </dom-module>
