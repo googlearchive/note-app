@@ -1,0 +1,22 @@
+{
+  "name": "note-app",
+  "authors": [
+    "The Polymer Authors"
+  ],
+  "description": "An offline-ready app for taking notes.",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "private": true,
+  "dependencies": {
+    "platinum-sw": "polymerelements/platinum-sw#^1.3.0",
+    "carbon-storage": "git@github.com:polymerelements/carbon-storage.git",
+    "carbon-pouchdb": "git@github.com:polymerelements/carbon-pouchdb.git",
+    "polymerfire": "git@github.com:firebaseprivate/polymerfire.git",
+    "paper-styles": "polymerelements/paper-styles#^1.0.0",
+    "iron-icons": "polymerelements/iron-icons#^1.0.0",
+    "iron-icon": "polymerelements/iron-icon#^1.0.0",
+    "font-roboto": "polymerelements/font-roboto#^1.0.0",
+    "iron-flex-layout": "polymerelements/iron-flex-layout#^1.0.0",
+    "paper-button": "polymerelements/paper-button#^1.0.0",
+    "paper-fab": "polymerelements/paper-fab#^1.0.0"
+  }
+}

@@ -1,0 +1,72 @@
+<dom-module id="note-app-shared-styles">
+  <template>
+    <style>
+      :host {
+        display: block;
+        background-color: #e8e8e8;
+        height: 100vh;
+        @apply(--paper-font-common-base);
+
+        --paper-fab-background: var(--paper-teal-500);
+      }
+
+      header {
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        background-color: var(--paper-purple-500);
+        color: var(--paper-purple-50);
+        padding: 6px 8px;
+      }
+
+      h1 {
+        font-size: 14px;
+        flex-grow: 1;
+        margin: 9px 0;
+      }
+
+      iron-icon {
+        margin-right: 0.5em;
+      }
+
+      .notes {
+        position: relative;
+        box-sizing: border-box;
+        padding: 1em;
+        max-height: calc(100vh - 46px);
+        overflow: scroll;
+      }
+
+      na-note {
+        margin-bottom: 1em;
+      }
+
+      paper-fab {
+        position: absolute;
+        bottom: 1em;
+        right: 1em;
+      }
+
+      @media (min-width: 640px) {
+        na-note {
+          max-width: 320px;
+          margin: 0 0.5em 1em;
+        }
+
+        .notes {
+          @apply(--layout-horizontal);
+          @apply(--layout-wrap);
+          justify-content: center;
+          align-content: space-around;
+        }
+
+        iron-icon {
+          margin-right: 1.5em;
+        }
+
+        iron-icon:first-child {
+          margin-left: 1em;
+        }
+      }
+    </style>
+  </template>
+</dom-module>

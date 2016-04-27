@@ -1,0 +1,117 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/font-roboto/roboto.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/carbon-storage/carbon-network-status-behavior.html">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700">
+
+<link rel="import" href="../bower_components/carbon-pouchdb/carbon-pouchdb-query.html">
+<link rel="import" href="../bower_components/carbon-pouchdb/carbon-pouchdb-document.html">
+<link rel="import" href="../note-app/na-note.html">
+<link rel="import" href="../note-app/na-editor.html">
+<link rel="import" href="../note-app/shared-styles.html">
+
+<dom-module id="note-app">
+  <template>
+    <style include="note-app-shared-styles"></style>
+
+    <header>
+      <iron-icon icon="bookmark"></iron-icon>
+      <h1>Notes</h1>
+      <iron-icon icon="cloud" hidden$="[[!online]]"></iron-icon>
+      <iron-icon icon="cloud-off" hidden$="[[online]]"></iron-icon>
+    </header>
+
+    <carbon-pouchdb-query
+        id="storage"
+        db-name="notes"
+        selector="_id $gt 0"
+        fields='["_id", "title", "body"]'
+        sort='["_id"]'
+        data="{{data}}">
+    </carbon-pouchdb-query>
+
+    <div class="notes">
+      <template is="dom-repeat" items="[[data]]" as="note">
+        <na-note
+            id$="[[note._id]]"
+            title="[[note.title]]"
+            body="[[note.body]]"
+            on-tap="edit">
+        </na-note>
+      </template>
+    </div>
+
+    <carbon-pouchdb-document
+        id="pouchdb"
+        db-name="notes"
+        doc-id="[[editableNoteId]]"
+        data="{{editableNote}}">
+    </carbon-pouchdb-document>
+
+    <paper-fab icon="add" on-tap="create"></paper-fab>
+
+    <na-editor
+        id="editor"
+        note="{{editableNote}}"
+        on-close="save">
+    </na-editor>
+
+  </template>
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'note-app',
+
+        behaviors: [
+          Polymer.CarbonNetworkStatusBehavior
+        ],
+
+        properties: {
+          editableNoteId: {
+            type: String,
+            notify: true
+          }
+        },
+
+        edit(event) {
+          var noteElement = Polymer.dom(event).localTarget;
+          this.editableNoteId = noteElement.id;
+
+          this.$.pouchdb.transactionsComplete.then(() => {
+            this.$.editor.open(noteElement);
+          });
+        },
+
+        create() {
+          this.editableNoteId = null;
+          this.$.editor.open();
+        },
+
+        save() {
+          if (this.$.pouchdb.isNew &&
+              (this.editableNote.title ||
+               this.editableNote.body)) {
+            this.$.pouchdb.save();
+          }
+
+          this.$.storage.refresh();
+        }
+      });
+    })();
+  </script>
+</dom-module>
