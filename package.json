@@ -1,0 +1,23 @@
+{
+  "name": "note-app",
+  "version": "0.0.1",
+  "description": "A small, offline-first app for taking notes.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PolymerLabs/note-app.git"
+  },
+  "author": "The Polymer Authors",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/PolymerLabs/note-app/issues"
+  },
+  "homepage": "https://github.com/PolymerLabs/note-app#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
