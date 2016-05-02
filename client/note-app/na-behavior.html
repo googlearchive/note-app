@@ -11,6 +11,10 @@
         }
       },
 
+      get notesPath() {
+        return '';
+      },
+
       get isEditable() {
         return true;
       },
@@ -41,7 +45,7 @@
         if (this.$.document.isNew &&
             (this.editableNote.title ||
              this.editableNote.body)) {
-          this.$.document.save('/notes');
+          this.$.document.save(this.notesPath);
         }
 
         if (this.$.query.refresh) {

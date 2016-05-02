@@ -39,6 +39,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="../bower_components/platinum-sw/platinum-sw-elements.html">
   <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
   <link rel="import" href="note-app.html">
+
+  <!-- Google Sign In -->
+  <meta name="google-signin-scope" content="profile email">
+  <meta name="google-signin-client_id" content="805171076293-b8fn4u7v9hdtsbe3qafc0t74hoirku2b.apps.googleusercontent.com">
+  <meta name="google-signin-cookiepolicy" content="single_host_origin">
+
   <style>
     body {
       margin: 0;
@@ -62,9 +68,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- Configure Firebase app: -->
   <firebase-app
       name="notes"
-      api-key="AIzaSyBsj9AQZxPzW1i7ybjRDYZb_e12djdYZPU"
-      auth-domain="carbon-storage-demo-3e146.firebaseapp.com"
-      database-url="https://carbon-storage-demo-3e146.firebaseio.com">
+      api-key="AIzaSyBzKhxNa2k9pA3m9_Ji3POFAKyGGFnyshI"
+      auth-domain="note-app-firebase-3a483.firebaseapp.com"
+      database-url="https://note-app-firebase-3a483.firebaseio.com">
   </firebase-app>
 
   <!-- Instantiate the Notes app: -->

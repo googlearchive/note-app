@@ -19,9 +19,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/carbon-storage/carbon-indexeddb-mirror/carbon-indexeddb-mirror.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-query.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-document.html">
+<link rel="import" href="../bower_components/polymerfire/firebase-auth.html">
 <link rel="import" href="../note-app/na-note.html">
 <link rel="import" href="../note-app/na-editor.html">
 <link rel="import" href="../note-app/na-behavior.html">
+<link rel="import" href="../note-app/na-login.html">
 <link rel="import" href="../note-app/shared-styles.html">
 
 <dom-module id="note-app">
@@ -35,15 +37,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <iron-icon icon="cloud-off" hidden$="[[online]]"></iron-icon>
     </header>
 
+    <na-login
+        on-sign-in="signIn"
+        signed-in="[[signedIn]]">
+    </na-login>
+
+    <firebase-auth
+        id="auth"
+        app-name="notes"
+        provider="google"
+        user="{{user}}"
+        signed-in="{{signedIn}}">
+    </firebase-auth>
+
     <firebase-query
         id="query"
         app-name="notes"
-        path="/notes"
+        path="/notes/[[user.uid]]"
         data="{{data}}">
     </firebase-query>
 
     <carbon-indexeddb-mirror
-        store="notes"
+        session="[[user.uid]]"
+        key="notes"
         data="{{data}}"
         persisted-data="{{persistedData}}"
         online="{{online}}">
@@ -91,8 +107,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           return this.online;
         },
 
+        get notesPath() {
+          return `/notes/${this.user.uid}`;
+        },
+
         toEditableId(noteId) {
-          return '/notes/' + noteId;
+          return `/${this.notesPath}/${noteId}`;
+        },
+
+        signIn() {
+          this.$.auth.signInWithPopup();
         }
       });
     })();
