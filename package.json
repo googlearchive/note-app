@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./index.js",
+    "start": "NOTE_APP_BACKEND=pouchdb node ./index.js",
     "bootstrap": "bower install"
   },
   "repository": {
