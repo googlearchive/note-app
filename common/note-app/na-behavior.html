@@ -42,17 +42,24 @@
       },
 
       commitChange(event) {
+        var changeCommits;
+
         switch (event.detail) {
           case 'save':
-            this.save();
+            changeCommits = this.save();
             break;
           case 'delete':
-            this.delete();
+            changeCommits = this.delete();
+            break;
+          default:
+            changeCommits = Promise.resolve();
             break;
         }
 
         if (this.$.query.refresh) {
-          this.$.query.refresh();
+          changeCommits.then(() => {
+            this.$.query.refresh();
+          });
         }
       },
 
@@ -60,16 +67,20 @@
         if (this.$.document.isNew &&
             (this.editableNote.title ||
              this.editableNote.body)) {
-          this.$.document.save(this.notesPath).then(() => {
+          return this.$.document.save(this.notesPath).then(() => {
             this.$.document.reset();
           });
         }
+
+        return Promise.resolve();
       },
 
       delete() {
         if (!this.$.document.isNew) {
           this.$.document.destroy();
         }
+
+        return Promise.resolve();
       },
 
       signOut() {
