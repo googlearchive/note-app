@@ -69,7 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         max-width: 480px;
         @apply(--layout-horizontal);
         @apply(--layout-center);
-        justify-content: flex-end;
+        justify-content: space-between;
         transition: opacity 0.3s;
         opacity: 0;
       }
@@ -81,7 +81,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div id="background"></div>
     <na-note id="note" title="{{note.title}}" body="{{note.body}}" editable></na-note>
     <div class="controls">
-      <paper-button on-tap="close">Done</paper-button>
+      <paper-button on-tap="delete">Delete</paper-button>
+      <paper-button on-tap="save">Done</paper-button>
     </div>
   </template>
   <script>
@@ -119,13 +120,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.transitionInFrom(this.getBoundingClientRect());
       },
 
-      close() {
+      save() {
+        this.close('save');
+      },
+
+      delete() {
+        this.close('delete');
+      },
+
+      close(detail) {
         if (this.__editedNoteElement) {
           this.__editedNoteElement.style.opacity = 1;
           this.__editedNoteElement = null;
         }
 
-        this.fire('close', null, { bubbles: false });
+        this.fire('close', detail, { bubbles: false });
         this.transitionOut().then(() => {
           Polymer.dom(this).classList.remove('open');
           this._setOpened(false);

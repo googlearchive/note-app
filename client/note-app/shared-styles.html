@@ -1,3 +1,8 @@
+<link rel="import" href="../bower_components/paper-styles/color.html">
+<link rel="import" href="../bower_components/font-roboto/roboto.html">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+
 <dom-module id="note-app-shared-styles">
   <template>
     <style>
@@ -10,30 +15,13 @@
         --paper-fab-background: var(--paper-teal-500);
       }
 
-      header {
-        @apply(--layout-horizontal);
-        @apply(--layout-center);
-        background-color: var(--paper-purple-500);
-        color: var(--paper-purple-50);
-        padding: 6px 8px;
-      }
-
-      h1 {
-        font-size: 14px;
-        flex-grow: 1;
-        margin: 9px 0;
-      }
-
-      iron-icon {
-        margin-right: 0.5em;
-      }
 
       .notes {
         position: relative;
         box-sizing: border-box;
         padding: 1em;
         max-height: calc(100vh - 46px);
-        overflow: scroll;
+        overflow: auto;
       }
 
       na-note {
@@ -57,14 +45,6 @@
           @apply(--layout-wrap);
           justify-content: center;
           align-content: space-around;
-        }
-
-        iron-icon {
-          margin-right: 1.5em;
-        }
-
-        iron-icon:first-child {
-          margin-left: 1em;
         }
       }
     </style>

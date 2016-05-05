@@ -41,15 +41,38 @@
         }
       },
 
+      commitChange(event) {
+        switch (event.detail) {
+          case 'save':
+            this.save();
+            break;
+          case 'delete':
+            this.delete();
+            break;
+        }
+
+        if (this.$.query.refresh) {
+          this.$.query.refresh();
+        }
+      },
+
       save() {
         if (this.$.document.isNew &&
             (this.editableNote.title ||
              this.editableNote.body)) {
           this.$.document.save(this.notesPath);
         }
+      },
 
-        if (this.$.query.refresh) {
-          this.$.query.refresh();
+      delete() {
+        if (!this.$.document.isNew) {
+          this.$.document.destroy();
+        }
+      },
+
+      signOut() {
+        if (this.$.auth) {
+          this.$.auth.signOut();
         }
       }
     };
@@ -57,6 +80,6 @@
     Polymer.NoteAppBehavior = [
       Polymer.CarbonNetworkStatusBehavior,
       Polymer.NoteAppBehaviorImpl
-    ]
+    ];
   })();
 </script>

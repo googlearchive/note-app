@@ -21,18 +21,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../note-app/na-note.html">
 <link rel="import" href="../note-app/na-editor.html">
 <link rel="import" href="../note-app/na-behavior.html">
+<link rel="import" href="../note-app/na-toolbar.html">
 <link rel="import" href="../note-app/shared-styles.html">
 
 <dom-module id="note-app">
   <template>
     <style include="note-app-shared-styles"></style>
 
-    <header>
-      <iron-icon icon="bookmark"></iron-icon>
-      <h1>Notes</h1>
-      <iron-icon icon="cloud" hidden$="[[!online]]"></iron-icon>
-      <iron-icon icon="cloud-off" hidden$="[[online]]"></iron-icon>
-    </header>
+    <na-toolbar></na-toolbar>
 
     <carbon-pouchdb-query
         id="query"

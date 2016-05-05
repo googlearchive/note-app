@@ -39,7 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-transform: none;
       }
     </style>
-    <paper-button on-tap="signIn">
+    <paper-button on-tap="signIn" disabled="[[disabled]]">
       <iron-icon icon="account-circle"></iron-icon>
       <span>Sign in with Google</span>
     </paper-button>
@@ -49,6 +49,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'na-login',
 
       properties: {
+        disabled: {
+          type: Boolean,
+          reflectToAttribute: true,
+          value: false
+        },
+
         signedIn: {
           type: Boolean,
           reflectToAttribute: true,
