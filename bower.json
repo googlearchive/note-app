@@ -6,9 +6,6 @@
   "description": "An offline-ready app for taking notes.",
   "license": "http://polymer.github.io/LICENSE.txt",
   "private": true,
-  "resolutions": {
-    "firebase": "http://www.gstatic.com/firebasejs/staging/3.0.0-rc.1/firebase.js"
-  },
   "dependencies": {
     "firebase": "http://www.gstatic.com/firebasejs/staging/3.0.0-rc.1/firebase.js",
     "platinum-sw": "polymerelements/platinum-sw#^1.3.0",
