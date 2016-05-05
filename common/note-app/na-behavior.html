@@ -60,7 +60,9 @@
         if (this.$.document.isNew &&
             (this.editableNote.title ||
              this.editableNote.body)) {
-          this.$.document.save(this.notesPath);
+          this.$.document.save(this.notesPath).then(() => {
+            this.$.document.reset();
+          });
         }
       },
 
