@@ -56,7 +56,7 @@
             break;
         }
 
-        if (this.$.query.refresh) {
+        if (this.$.query && this.$.query.refresh) {
           changeCommits.then(() => {
             this.$.query.refresh();
           });
