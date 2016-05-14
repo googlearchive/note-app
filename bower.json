@@ -9,8 +9,8 @@
   "dependencies": {
     "firebase": "http://www.gstatic.com/firebasejs/staging/3.0.0-rc.1/firebase.js",
     "platinum-sw": "polymerelements/platinum-sw#^1.3.0",
-    "carbon-storage": "git@github.com:polymerelements/carbon-storage.git",
-    "carbon-pouchdb": "git@github.com:polymerelements/carbon-pouchdb.git",
+    "app-storage": "git@github.com:polymerelements/app-storage.git",
+    "app-pouchdb": "git@github.com:polymerelements/app-pouchdb.git",
     "polymerfire": "git@github.com:firebaseprivate/polymerfire.git",
     "paper-styles": "polymerelements/paper-styles#^1.0.0",
     "iron-icons": "polymerelements/iron-icons#^1.0.0",

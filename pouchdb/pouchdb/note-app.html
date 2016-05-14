@@ -9,8 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../note-app/na-elements.html">
-<link rel="import" href="/bower_components/carbon-pouchdb/carbon-pouchdb-query.html">
-<link rel="import" href="/bower_components/carbon-pouchdb/carbon-pouchdb-document.html">
+<link rel="import" href="/bower_components/app-pouchdb/app-pouchdb-query.html">
+<link rel="import" href="/bower_components/app-pouchdb/app-pouchdb-document.html">
 
 <dom-module id="note-app">
   <template>
@@ -18,14 +18,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <na-toolbar></na-toolbar>
 
-    <carbon-pouchdb-query
+    <app-pouchdb-query
         id="query"
         db-name="notes"
         selector="_id $gt 0"
         fields='["_id", "title", "body"]'
         sort='["_id"]'
         data="{{data}}">
-    </carbon-pouchdb-query>
+    </app-pouchdb-query>
 
     <div class="notes">
       <template is="dom-repeat" items="[[data]]" as="note">
@@ -38,12 +38,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </div>
 
-    <carbon-pouchdb-document
+    <app-pouchdb-document
         id="document"
         db-name="notes"
         doc-id="[[editableNoteId]]"
         data="{{editableNote}}">
-    </carbon-pouchdb-document>
+    </app-pouchdb-document>
 
     <paper-fab icon="add" on-tap="create"></paper-fab>
 
